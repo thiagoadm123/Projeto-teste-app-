@@ -1,0 +1,25 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid",
+        "profile": {
+          ".validate": "newData.hasChildren(['displayName', 'email']) && newData.child('displayName').isString() && newData.child('displayName').val().length > 0 && newData.child('displayName').val().length <= 80 && newData.child('email').isString()"
+        },
+        "recipes": {
+          "$recipeId": {
+            ".validate": "newData.hasChildren(['title', 'ingredients', 'favorite', 'createdAt', 'updatedAt']) && newData.child('title').isString() && newData.child('title').val().length > 0 && newData.child('title').val().length <= 120 && newData.child('ingredients').isList() && newData.child('favorite').isBoolean()"
+          }
+        },
+        "shoppingList": {
+          "$itemId": {
+            ".validate": "newData.hasChildren(['name','checked']) && newData.child('name').isString() && newData.child('name').val().length > 0 && newData.child('name').val().length <= 160 && newData.child('checked').isBoolean()"
+          }
+        }
+      }
+    }
+  }
+}
